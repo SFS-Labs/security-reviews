@@ -31,3 +31,16 @@ A passing GitHub workflow plus `CAMBER_MULTITOOL_EVIDENCE` is required before ma
 - **Successful complete test:** [run #40715880383](https://github.com/SFS-Labs/security-reviews/actions/runs/40715880383) installed free Ubuntu `adb`, `apktool` and Java runtime, then issued three separate `tools/call` operations in the SAME REA MCP session. All returned `isError!=true`; `binary_session` verified `rea-agents@6.8.0`, catalog 229 tools; **16 plan tests + 17 provider gate tests passed**.
 - **What this proves:** A real Camber-model-chosen tool sequence was reviewed, dispatched by the GitHub PR CI and executed with successful REA MCP responses, no targets and no paid model API.
 - **What it does not prove:** That Camber started without any outside message, that the REA server performed APK decompilation, or that Camber can choose and execute arbitrary REA tools without the reviewed allowlist. The runner did not make a Camber model inference call itself.
+
+## Scheduled no-credit fallback — NOT Camber headless execution
+
+The selected read-only REA plan now also supports a weekly GitHub Actions schedule, Mondays at 06:17 UTC (GitHub schedule delays are possible). This runs on the public standard Ubuntu GitHub-hosted runner, with no Camber API calls at runtime, no ChatGPT Work/Codex/Copilot agents, and no paid model inference. Normal PR CI and manual workflow_dispatch remain available. No cron-triggered run has yet occurred; PR CI only verifies the workflow body, not the future scheduler event. The scheduled event may be disabled by GitHub after prolonged public-repository inactivity.
+
+**Crucial distinction:** The scheduler replays the source-controlled plan that Camber previously selected; it does **not** start the Camber AI agent. If Issue #5 requires Camber's model to wake autonomously and select new tools on each run, this remains BLOCKED until there is a supported, securely authenticated headless Camber invocation (or an additional external automation slot and an actual validated connector run). Do not call this change Camber self-starting autonomy.
+
+## Camber-initiated production acceptance
+
+Live Camber agent chose the Android multi-tool workflow in preference to the generic REA one-tool selfcheck for the user's natural-language Android readiness request, then initiated exactly one authenticated GitHub workflow_dispatch. [Camber decision and dispatch](https://app.cambercloud.com/project/8eac984b-5be0-46d8-a98c-e50ef46fc3ee?chatId=2d369cf6-5c6f-4721-8980-a9ca9abc1f4c).
+[GitHub Actions run #40716523503](https://github.com/SFS-Labs/security-reviews/actions/runs/40716523503) completed SUCCESS; actual REA MCP calls to binary_session, inspect_apktool_client and inspect_adb_client all returned without errors, 33 validation checks passed. REA 6.8.0, catalog 229 tools. No third-party APK or device was used.
+
+This proves the **actual Camber-model workflow decision + GitHub execution**, but the three MCP operations follow the Camber-selected reviewed plan without runtime free-form adaptivity.
