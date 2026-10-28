@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "task_id": "rea-android-readiness",
+  "requested_by": "camber",
+  "source_conversation": "https://app.cambercloud.com/project/cbdb401b-cf2d-4248-8692-b2ebcb5effbb?chatId=289e6fe5-4023-4563-9505-1999017d6379",
+  "purpose": "Check readiness for future authorized Android APK research without inspecting any APK or device.",
+  "tools": [
+    {
+      "name": "binary_session",
+      "arguments": {},
+      "reason": "Establish the actual MCP server package identity and tool capability catalog."
+    },
+    {
+      "name": "inspect_apktool_client",
+      "arguments": {},
+      "reason": "Check the availability of the APK static tooling without submitting an APK."
+    },
+    {
+      "name": "inspect_adb_client",
+      "arguments": {},
+      "reason": "Check Android debug bridge readiness without connecting to a device."
+    }
+  ],
+  "max_calls": 3,
+  "allow_external_targets": false,
+  "allow_paid_services": false,
+  "requires_human_approved_workflow": true
+}
