@@ -1,0 +1,29 @@
+name: Camber REA read-only skill tests
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/camber-rea-skill.yml"
+      - "tools/camber/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-camber-status:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify Camber skill without credentials or network
+        shell: bash
+        run: |
+          python3 --version
+          python3 -m unittest -v tools.camber.test_rea_status_skill
+          python3 -m py_compile tools/camber/rea_status_skill.py
