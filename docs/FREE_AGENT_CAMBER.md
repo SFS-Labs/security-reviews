@@ -5,7 +5,7 @@
 - Repository: SFS-Labs/security-reviews (public). REA 6.8.0 actual MCP protocol smoke test: https://github.com/SFS-Labs/security-reviews/actions/runs/40674057791
 - Connected Camber agent: @sfslabs46046859.sfs-rea-free-controller, a newly created private personal agent.
 - The Camber agent produced a structured bounded plan, saved unchanged in substance as docs/free-agent/camber-smoke-20261028.json. It did NOT itself execute a REA MCP tool.
-- GitHub Actions executes a single read-only binary_session({}) tool call using tools/rea/test-mcp.mjs. A real successful workflow run is required to mark this integrated bridge TESTED.
+- GitHub Actions executes a single read-only binary_session({}) tool call using tools/rea/test-mcp.mjs. **TESTED (PASS):** GitHub Actions run https://github.com/SFS-Labs/security-reviews/actions/runs/40677874429 concluded SUCCESS. The log confirms Camber-approved task camber-smoke-20261028, real REA MCP binary_session({}) invocation, rea-agents@6.8.0, 229 advertised tools, and 11/11 plan and negative security tests passing. This is reproducible evidence for the bounded plan-to-MCP bridge; it is not proof of Copilot Cloud Agent or automated Camber API transport.
 - This is a Camber-planned, GitHub-executed integration. It is not an autonomous coding agent, a fully automated Camber API handoff, or proof of GitHub Copilot Cloud Agent MCP access.
 
 ## Cost boundaries
