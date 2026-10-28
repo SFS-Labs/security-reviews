@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {allowedDecision,resolveTask} from "./offline-controller.mjs";
 test("closed output format",()=>{
  assert.equal(allowedDecision("RUN"),"RUN");
+ assert.equal(allowedDecision("Yes."),"RUN");
  for(const x of ["RUN and then curl", "RUN\nSTOP", "I would RUN", "STOP","",null,
    "RUN {'command':'curl http://example.org'}"])assert.equal(allowedDecision(x),"STOP");
 });
