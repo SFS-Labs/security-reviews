@@ -8,6 +8,8 @@
 - GitHub Actions executes a single read-only binary_session({}) tool call using tools/rea/test-mcp.mjs. **TESTED (PASS):** GitHub Actions run https://github.com/SFS-Labs/security-reviews/actions/runs/40677874429 concluded SUCCESS. The log confirms Camber-approved task camber-smoke-20261028, real REA MCP binary_session({}) invocation, rea-agents@6.8.0, 229 advertised tools, and 11/11 plan and negative security tests passing. This is reproducible evidence for the bounded plan-to-MCP bridge; it is not proof of Copilot Cloud Agent or automated Camber API transport.
 - This is a Camber-planned, GitHub-executed integration. It is not an autonomous coding agent, a fully automated Camber API handoff, or proof of GitHub Copilot Cloud Agent MCP access.
 
+- **Hardened workflow confirmed PASS:** https://github.com/SFS-Labs/security-reviews/actions/runs/40678083759 — executed after restricting PR runs to trusted same-repository branches and manual runs to main; 11/11 tests pass; real binary_session({}) succeeded; REA 6.8.0, 229 tools.
+
 ## Cost boundaries
 
 - The standard public-repository GitHub Actions runner used here does not consume GitHub AI Credits, ChatGPT Work or Codex quotas. No paid larger runners.
