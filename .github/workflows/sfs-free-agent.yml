@@ -1,0 +1,44 @@
+name: SFS Free-Agent Camber-to-REA (no Copilot)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/sfs-free-agent.yml"
+      - "tools/free-agent/**"
+      - "docs/free-agent/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sfs-free-agent-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  camber-plan-run:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      SFS_FREE_AGENT_APPROVED: camber-smoke-20261028
+      CI: "true"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup pinned Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24.22.1"
+      - name: Validate plan and negative security cases
+        shell: bash
+        run: node --test tools/free-agent/test-validate-plan.mjs
+      - name: Install pinned REA MCP
+        shell: bash
+        run: bash tools/rea/install.sh core
+      - name: Execute one approved read-only Camber plan over real MCP
+        shell: bash
+        run: node tools/free-agent/run-plan.mjs

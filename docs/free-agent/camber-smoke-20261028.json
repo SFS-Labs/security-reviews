@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "task_id": "camber-smoke-20261028",
+  "backend": "camber",
+  "tool": "binary_session",
+  "arguments": {},
+  "requires_human_confirmation": true,
+  "maximum_tool_calls": 1,
+  "expected_identity_package": "rea-agents",
+  "expected_identity_version": "6.8.0",
+  "privacy": "public-synthetic",
+  "evidence_requirements": [
+    "GitHub Actions run log URL proving real MCP binary_session({}) invocation",
+    "Actual response verifies rea-agents@6.8.0 and expected MCP catalog",
+    "UTC timestamp of actual invocation",
+    "Read-only execution, no target binaries, no secrets, no paid services"
+  ],
+  "warnings": [
+    "Camber planned this call but did not itself execute any MCP tool.",
+    "GitHub Actions is a separate controlled executor; Copilot Cloud Agent remains unverified.",
+    "Never log complete MCP payloads or confidential values.",
+    "No paid API calls, billing upgrades, or unrestricted agent tool loops."
+  ]
+}
