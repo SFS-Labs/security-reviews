@@ -25,7 +25,7 @@ export function resolveTask(event, eventName, mode="selfcheck") {
 }
 export function allowedDecision(reply) {
   const text=String(reply??"").trim();
-  return /^RUN\.?$/i.test(text) ? "RUN" : "STOP";
+  return /^(?:RUN|YES)[.!]?$/i.test(text) ? "RUN" : "STOP";
 }
 const selfURL=process.argv[1]&&new URL("file://"+process.argv[1]);
 if(selfURL?.href===import.meta.url) {
