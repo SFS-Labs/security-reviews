@@ -1,0 +1,45 @@
+name: REA toolchain readiness (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "Core, Android/JADX, native/Ghidra, or all; full providers download large binaries"
+        type: choice
+        required: true
+        default: core
+        options:
+          - core
+          - android
+          - native
+          - all
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout reviewed repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24"
+      - name: JDK 21
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Install requested toolchain and check readiness
+        shell: bash
+        run: bash tools/rea/install.sh "${{ inputs.profile }}"
+      - name: Verify installed commands
+        shell: bash
+        run: |
+          rea --version
+          rea providers --json
+          rea capabilities --json
