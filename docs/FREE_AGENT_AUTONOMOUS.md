@@ -42,4 +42,4 @@ This first autonomous agent has exactly one harmless tool contract and a binary 
 - Hugging Face model: https://huggingface.co/onnx-community/SmolLM2-135M-Instruct-ONNX/tree/b8a5c0f183b78c55955a5364f610c36668b5e681
 - Transformers.js library: https://huggingface.co/docs/transformers.js/pipelines
 
-**Status until live CI:** IMPLEMENTED in branch, NOT YET TESTED.
+**Verified CI: PASS.** https://github.com/SFS-Labs/security-reviews/actions/runs/40680334875, 2026-10-28: local offline model output `Yes.` normalized by the bounded router to `RUN`; real REA MCP `binary_session({})` returned `rea-agents@6.8.0` and 229 tools. 11/11 new offline routing tests plus 11/11 existing Camber-plan policy tests passed. This proves the PR's autonomous runner, NOT a Camber headless session or a live GitHub issue-label event (separate acceptance check).
