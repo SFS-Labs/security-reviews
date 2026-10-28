@@ -1,5 +1,8 @@
 name: REA toolchain readiness (manual)
 on:
+  pull_request:
+    paths:
+      - ".github/workflows/rea-toolchain.yml"
   workflow_dispatch:
     inputs:
       profile:
@@ -36,7 +39,7 @@ jobs:
           java-version: "21"
       - name: Install requested toolchain and check readiness
         shell: bash
-        run: bash tools/rea/install.sh "${{ inputs.profile }}"
+        run: bash tools/rea/install.sh "${{ inputs.profile || 'all' }}"
       - name: Verify installed commands
         shell: bash
         run: |
