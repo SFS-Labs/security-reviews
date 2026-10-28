@@ -1,0 +1,45 @@
+name: SFS Camber selected REA multi-tool (no AI API)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/sfs-camber-multitool.yml"
+      - "tools/free-agent/run-camber-multitool.mjs"
+      - "tools/free-agent/validate-camber-multitool.mjs"
+      - "tools/free-agent/test-camber-multitool.mjs"
+      - "docs/free-agent/camber-android-readiness.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sfs-camber-multitool-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  read-only-diagnostics:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout approved branch without credential persistence
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Node 24.22.1
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24.22.1"
+      - name: Test Camber plan validation and provider isolation
+        shell: bash
+        run: |
+          node --test tools/free-agent/test-camber-multitool.mjs
+          node --test tools/free-agent/test-provider-gate.mjs
+      - name: Install pinned REA core
+        shell: bash
+        run: bash tools/rea/install.sh core
+      - name: Run Camber-selected three target-free REA MCP operations
+        shell: bash
+        run: node tools/free-agent/run-camber-multitool.mjs
