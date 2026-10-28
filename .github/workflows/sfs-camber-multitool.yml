@@ -40,6 +40,13 @@ jobs:
       - name: Install pinned REA core
         shell: bash
         run: bash tools/rea/install.sh core
+      - name: Install free Android readiness clients
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends adb apktool default-jre-headless
+          adb version
+          apktool --version
       - name: Run Camber-selected three target-free REA MCP operations
         shell: bash
         run: node tools/free-agent/run-camber-multitool.mjs
