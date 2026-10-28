@@ -1,0 +1,31 @@
+name: REA MCP protocol smoke (no AI)
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/rea-mcp-protocol.yml"
+      - "tools/rea/test-mcp.mjs"
+      - "docs/rea-copilot-mcp.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mcp-protocol:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup compatible Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24.22.1"
+      - name: Install pinned REA core
+        shell: bash
+        run: bash tools/rea/install.sh core
+      - name: Execute actual MCP initialize + tools/list + tools/call
+        shell: bash
+        run: node tools/rea/test-mcp.mjs
