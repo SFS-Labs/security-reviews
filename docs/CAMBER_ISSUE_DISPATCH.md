@@ -39,3 +39,11 @@ Reference script: [rea_issue_dispatch_skill.py](../tools/camber/rea_issue_dispat
 5. Record evidence in [Issue #5](https://github.com/SFS-Labs/security-reviews/issues/5). No costs or premium-model invocation.
 
 No repository write from this PR is authorized via Camber beyond the label operation described above.
+
+## Camber native dispatcher registration (VERIFIED, not invoked)
+
+- `sfs-rea-issue-dispatch`, Skill ID `31e6c9aa-59d1-49fc-9fcb-84ceea230a5a`, was successfully registered under the existing Camber agent `@sfslabs46046859.sfs-rea-free-controller`, status ACTIVE.
+- The Camber Skill was installed through the documented `camber.agent.skill.create` API; registration result was independently returned in [Camber session](https://app.cambercloud.com/project/732d738c-e466-4ba6-82e5-4380031e9f5f?chatId=383a4a3a-3cf4-4547-b5d4-fc6c0709e476).
+- Camber verified repository read access, but did **not** execute the label-writing Skill. Its known GitHub connector permission remains HTTP 403 for Issues label writes.
+- The Git-tracked reference implementation and Camber Stash script were created separately; byte-for-byte equality was not independently verified. The live script reports a safe `WRITE_BLOCKED` response upon HTTP 403.
+- Standalone unit tests and the modified GitHub Actions CI passed in [run #40691421776](https://github.com/SFS-Labs/security-reviews/actions/runs/40691421776).
