@@ -28,7 +28,7 @@ Source file `tools/camber/rea_actions_dispatch_skill.py` provides a fixed, narro
 
 Offline tests: `tools/camber/test_rea_actions_dispatch_skill.py`; coverage includes exact allowed call, changed repository or branch, disabled workflow, 403, non-True results and no retries. GitHub Actions CI `.github/workflows/camber-rea-skill.yml`.
 
-**Status:** Git-tracked code deployed only after a passing PR and merge. The reusable Camber-native skill itself requires separate registration and an independent status check before claiming ACTIVE.
+**Status: ACTIVE in Camber, CI PASS.** The existing Camber agent registered the reusable native Skill `sfs-rea-actions-dispatch` (ID `89d36432-9f1d-4011-b544-5d66846bdc9b`) with the official Camber skill registry on 28 October 2026. [Registration evidence](https://app.cambercloud.com/project/f600c6b2-abee-42d3-b422-a11b908ca318?chatId=faee481f-7817-4aa8-9c03-4bb1d2b709e9). The registered Skill has **not yet been invoked** (no duplicate dispatch); the preceding direct Camber Python API call already proved the same fixed E2E route in run #40695671435. The Git-tracked reference and runtime-registered Python file were independently created and are not certified byte-for-byte identical. GitHub [CI run #40696093045](https://github.com/SFS-Labs/security-reviews/actions/runs/40696093045) passed **15/15 offline Python tests**.
 
 ## Operating model
 
