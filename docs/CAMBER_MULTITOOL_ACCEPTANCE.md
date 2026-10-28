@@ -23,3 +23,11 @@ A passing GitHub workflow plus `CAMBER_MULTITOOL_EVIDENCE` is required before ma
 **Unattended start of Camber itself** is a separate feature. Camber's connected Python SDK exposes agent definition and skill management but no supported `agent.invoke/chat/run` or native cron/scheduler; authenticated Camber HTTP MCP uses OAuth. Existing ChatGPT scheduled tasks have reached the plan's five-task maximum. GitHub schedule can automatically run the GitHub REA executor but **cannot be described as starting Camber** without a separately supported, authenticated Camber invocation mechanism and real E2E proof.
 
 **Do not invent a Camber API endpoint, extract browser OAuth tokens, or embed a PAT in a public repository to simulate this missing functionality.** Maintain the GitHub production execution path independent of Camber.
+
+## VERIFIED E2E RESULT — 28 Oct 2026
+
+- **Camber model proposal:** [actual decision session](https://app.cambercloud.com/project/cbdb401b-cf2d-4248-8692-b2ebcb5effbb?chatId=289e6fe5-4023-4563-9505-1999017d6379), selects three distinct read-only tools in order `binary_session`, `inspect_apktool_client`, `inspect_adb_client`.
+- **Initial diagnostic:** [run #40715658610](https://github.com/SFS-Labs/security-reviews/actions/runs/40715658610) confirmed three actual MCP calls but apktool/adb probes returned `isError=true` because those clients were absent. This was correctly treated as missing tooling, NOT readiness PASS.
+- **Successful complete test:** [run #40715880383](https://github.com/SFS-Labs/security-reviews/actions/runs/40715880383) installed free Ubuntu `adb`, `apktool` and Java runtime, then issued three separate `tools/call` operations in the SAME REA MCP session. All returned `isError!=true`; `binary_session` verified `rea-agents@6.8.0`, catalog 229 tools; **16 plan tests + 17 provider gate tests passed**.
+- **What this proves:** A real Camber-model-chosen tool sequence was reviewed, dispatched by the GitHub PR CI and executed with successful REA MCP responses, no targets and no paid model API.
+- **What it does not prove:** That Camber started without any outside message, that the REA server performed APK decompilation, or that Camber can choose and execute arbitrary REA tools without the reviewed allowlist. The runner did not make a Camber model inference call itself.
