@@ -22,7 +22,7 @@
 
 Workflow: [REA MCP protocol smoke](../.github/workflows/rea-mcp-protocol.yml). It uses a GitHub-hosted runner **without model inference**, starts the same `npx -y rea-agents@6.8.0 mcp` command as the Copilot registration, performs MCP `initialize`, enumerates `tools/list` and calls `binary_session` with `{}`. It asserts the actual returned package identity and catalog count while suppressing full tool payloads.
 
-A passing result verifies that the REA MCP server speaks the expected protocol and answers a real local client on GitHub Actions. It **does not** verify Copilot Cloud Agent admission, tool injection into Copilot, or agent-controlled tool use. The workflow run conclusion must be independently checked before labelling this test PASS.
+A passing result verifies that the REA MCP server speaks the expected protocol and answers a real local client on GitHub Actions. It **does not** verify Copilot Cloud Agent admission, tool injection into Copilot, or agent-controlled tool use. **PASS independently verified:** [Actions run #40674057791](https://github.com/SFS-Labs/security-reviews/actions/runs/40674057791), job `mcp-protocol`, concluded `success` on 2026-10-28. The job log reports a real `tools/call` for `binary_session({})`, `rea-agents` version `6.8.0`, and 229 advertised / 229 catalog MCP tools. This is strictly a protocol-client test, NOT a Copilot Cloud Agent invocation.
 
 ## Remaining acceptance gate
 
