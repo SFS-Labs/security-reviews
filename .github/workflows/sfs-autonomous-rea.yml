@@ -30,7 +30,7 @@ jobs:
     if: >-
       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main') ||
-      (github.event_name == 'issues' && github.event.label.name == 'sfs-rea-auto' && github.event.issue.title == 'REA MCP self-check' && github.event.issue.state == 'open')
+      (github.event_name == 'issues' && github.event.sender.login == 'SFS-Labs' && github.event.label.name == 'sfs-rea-auto' && github.event.issue.title == 'REA MCP self-check' && github.event.issue.state == 'open')
     runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
