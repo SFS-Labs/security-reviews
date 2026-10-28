@@ -48,6 +48,7 @@ if(selfURL?.href===import.meta.url) {
   const reply=await generator(messages,{max_new_tokens:8,do_sample:false,return_full_text:false});
   const out=reply?.[0]?.generated_text;
   const raw=typeof out==="string"?out:Array.isArray(out)?out.at(-1)?.content:"";
+  console.log("MODEL_OUTPUT_DIAGNOSTIC="+JSON.stringify({type:typeof out,preview:String(raw).slice(0,160),shape:Array.isArray(out)?"array":typeof out}));
   const decision=allowedDecision(raw);
   console.log("LOCAL_MODEL="+model+" revision="+revision+" decision="+decision);
   if(decision!=="RUN")throw Error("Offline inference abstained; no MCP tool was executed.");
