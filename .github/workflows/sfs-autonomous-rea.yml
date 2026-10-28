@@ -6,6 +6,9 @@ on:
       - ".github/workflows/sfs-autonomous-rea.yml"
       - "tools/free-agent/offline-controller.mjs"
       - "tools/free-agent/test-offline-controller.mjs"
+      - "tools/free-agent/provider-gate.mjs"
+      - "tools/free-agent/test-provider-gate.mjs"
+      - "config/free-agent-providers.json"
   issues:
     types: [labeled]
   workflow_dispatch:
@@ -47,6 +50,10 @@ jobs:
         run: |
           node --test tools/free-agent/test-offline-controller.mjs
           node --test tools/free-agent/test-validate-plan.mjs
+          node --test tools/free-agent/test-provider-gate.mjs
+      - name: Enforce optional-provider isolation before downloads
+        shell: bash
+        run: node tools/free-agent/provider-gate.mjs
       - name: Install pinned local open-weight inference runtime
         shell: bash
         run: npm install --no-save --no-audit --no-fund @huggingface/transformers@4.3.1
