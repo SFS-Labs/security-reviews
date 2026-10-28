@@ -24,7 +24,7 @@ const bad=[
 for(const [name,change] of bad){
  test("rejects "+name,()=>{
   const target={...original,...change};
-  if(name==="prototype polluting key") target["__proto__"]="test";
+  if(name==="prototype polluting key") Object.defineProperty(target,"__proto__",{value:"test", enumerable:true});
   assert.throws(()=>validatePlan(target));
  });
 }
