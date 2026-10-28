@@ -1,5 +1,8 @@
 # Camber → GitHub Actions REA Dispatch (minimal-permission integration)
 
+> **SUPERSEDED 2026-10-28:** This issue-label path is NOT required. The already-granted **Actions: Read and write** GitHub scope enabled a successful direct `workflow_dispatch` from Camber, and GitHub Actions #40695671435 completed REA MCP successfully. Do NOT expand Issues permissions to use the recommended path. See [direct dispatch verification](CAMBER_ACTIONS_DISPATCH_VERIFIED.md).
+
+
 **Status:** Code implemented in an isolated PR; live Camber dispatch BLOCKED until one repo-scoped permission is granted.
 
 ## Live evidence
