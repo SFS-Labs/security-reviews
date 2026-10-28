@@ -51,3 +51,12 @@ The initial real issue-label run [#40680649289](https://github.com/SFS-Labs/secu
 ## Verified limitation: Qwen model reliability and deterministic policy gate
 
 The upgraded Qwen2.5 0.5B model also produced an unparseable response in PR test https://github.com/SFS-Labs/security-reviews/actions/runs/40680861895. Therefore agent-generated instructions are deliberately **advisory only**. A separately verified GitHub event triggers exactly the pre-reviewed REA introspection contract, even when the model abstains. This preserves automated, free workflow execution, but **does not demonstrate trustworthy agentic tool selection** or Camber headless inference. The final event-driven run must be checked independently before marking deployment TESTED.
+
+## FINAL LIVE ACCEPTANCE — 28 October 2026
+
+- **VERIFIED:** Issue [#7](https://github.com/SFS-Labs/security-reviews/issues/7) received the owner-applied `sfs-rea-auto` label and initiated [the actual GitHub `issues:labeled` run #40681394493](https://github.com/SFS-Labs/security-reviews/actions/runs/40681394493) without ChatGPT relay.
+- The Actions job concluded **SUCCESS** on `main` commit `cd5e2de97fed898b33baf9487e43c90cdc49dd69`.
+- 11 offline-router and 11 plan-security tests passed; actual MCP `binary_session({})` call returned `rea-agents@6.8.0`, with 229 advertised tools.
+- The local Qwen model returned a non-allowlisted output; controller recorded `decision: STOP` and `model_selected_tool: false`. The trusted issue event's reviewed deterministic policy executed the single harmless read-only self-check. This proves *fully unattended, event-driven MCP execution*, **not** generalized AI-selected tool autonomy.
+- No Camber, Copilot, Work or Codex inference occurred on this runner. The Student Camber agent remains separately accessible. Camber headless-agent API/webhook support remains BLOCKED; see [Issue #5](https://github.com/SFS-Labs/security-reviews/issues/5).
+- **STATUS:** DEPLOYED + TESTED for the exact synthetic self-check only. Further tool expansion needs new reviews/tests and zero-cost entitlement verification.
