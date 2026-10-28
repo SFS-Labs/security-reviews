@@ -6,6 +6,7 @@
  */
 import {spawnSync} from "node:child_process";
 import {readFile,appendFile} from "node:fs/promises";
+import {readAndVerifyProviderGate} from "./provider-gate.mjs";
 
 export function resolveTask(event, eventName, mode="selfcheck") {
   if (eventName==="pull_request") return {source:"ci",instruction:"Perform the read-only REA MCP identity self-check using binary_session({})."};
@@ -29,6 +30,7 @@ export function allowedDecision(reply) {
 }
 const selfURL=process.argv[1]&&new URL("file://"+process.argv[1]);
 if(selfURL?.href===import.meta.url) {
+  await readAndVerifyProviderGate();
   if(process.env.GITHUB_ACTIONS!=="true") throw Error("GitHub Actions runner required.");
   const eventName=process.env.GITHUB_EVENT_NAME||"";
   const event=JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH,"utf8"));

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "production": {
+    "executor": "github-actions",
+    "tool_authority": "fixed-reviewed-contract",
+    "public_standard_runner_only": true,
+    "paid_inference_allowed": false,
+    "work_codex_copilot_inference_allowed": false
+  },
+  "camber": {
+    "role": "optional-future-control-plane",
+    "enabled": false,
+    "agent_tag": "@sfslabs46046859.sfs-rea-free-controller",
+    "student_confirmed_by_owner": true,
+    "headless_inference_transport": "unavailable",
+    "headless_inference_verified": false,
+    "signed_delivery_verified": false,
+    "zero_cost_hard_ceiling_verified": false,
+    "unattended_e2e_verified": false,
+    "tool_selection_authority": "none"
+  }
+}
