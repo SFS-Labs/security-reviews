@@ -1,5 +1,7 @@
 name: SFS Camber selected REA multi-tool (no AI API)
 on:
+  schedule:
+    - cron: '17 6 * * 1' # Mondays 06:17 UTC, free GitHub runner; not a Camber agent login
   pull_request:
     paths:
       - ".github/workflows/sfs-camber-multitool.yml"
@@ -20,6 +22,7 @@ jobs:
   read-only-diagnostics:
     if: >-
       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'schedule' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main')
     runs-on: ubuntu-24.04
     timeout-minutes: 8
