@@ -25,5 +25,5 @@ jobs:
         shell: bash
         run: |
           python3 --version
-          python3 -m unittest -v tools.camber.test_rea_status_skill
-          python3 -m py_compile tools/camber/rea_status_skill.py
+          python3 -m unittest -v tools.camber.test_rea_status_skill tools.camber.test_rea_issue_dispatch_skill
+          python3 -m py_compile tools/camber/rea_status_skill.py tools/camber/rea_issue_dispatch_skill.py
