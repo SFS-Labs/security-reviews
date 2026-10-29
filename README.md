@@ -18,7 +18,7 @@ This repository contains two distinct areas of personal, AI-assisted engineering
 
 **Additional implementation:** A separately [documented local-model, issue-triggered REA self-check](docs/FREE_AGENT_AUTONOMOUS.md) uses an open-weight model under a deterministic authorization gate; a model abstention must not be described as successful free-form reasoning. [Camber read-only skill](docs/CAMBER_NATIVE_SKILL.md) and [protocol/toolchain evidence](docs/REA_MCP_E2E_VERIFICATION.md) record the remaining integration boundaries.
 
-**Still open:** [Issue #5 — unattended fresh Camber model invocation](issues/5). This optional capability is distinct from the already functioning GitHub REA executor. No APK, connected Android device, customer environment or third-party binary was examined in the multi-tool acceptance run.
+**Still open:** [Issue #5 — unattended fresh Camber model invocation](https://github.com/SFS-Labs/security-reviews/issues/5). This optional capability is distinct from the already functioning GitHub REA executor. No APK, connected Android device, customer environment or third-party binary was examined in the multi-tool acceptance run.
 
 ## 2 · External Solidity review — POINCARÉ
 
