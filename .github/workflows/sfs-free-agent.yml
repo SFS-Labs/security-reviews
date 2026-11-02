@@ -1,12 +1,6 @@
 name: SFS Free-Agent Camber-to-REA (no Copilot)
-on:
-  pull_request:
-    paths:
-      - ".github/workflows/sfs-free-agent.yml"
-      - "tools/free-agent/**"
-      - "docs/free-agent/**"
+'on':
   workflow_dispatch:
-
 permissions:
   contents: read
 
