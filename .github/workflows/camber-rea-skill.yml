@@ -1,11 +1,6 @@
 name: Camber REA read-only skill tests
-on:
-  pull_request:
-    paths:
-      - ".github/workflows/camber-rea-skill.yml"
-      - "tools/camber/**"
+'on':
   workflow_dispatch:
-
 permissions:
   contents: read
 
