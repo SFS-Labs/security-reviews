@@ -1,12 +1,6 @@
 name: REA MCP protocol smoke (no AI)
-on:
-  pull_request:
-    paths:
-      - ".github/workflows/rea-mcp-protocol.yml"
-      - "tools/rea/test-mcp.mjs"
-      - "docs/rea-copilot-mcp.json"
+'on':
   workflow_dispatch:
-
 permissions:
   contents: read
 
