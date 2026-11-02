@@ -1,16 +1,6 @@
 name: SFS Autonomous Offline REA Agent (zero AI credits)
 
-on:
-  pull_request:
-    paths:
-      - ".github/workflows/sfs-autonomous-rea.yml"
-      - "tools/free-agent/offline-controller.mjs"
-      - "tools/free-agent/test-offline-controller.mjs"
-      - "tools/free-agent/provider-gate.mjs"
-      - "tools/free-agent/test-provider-gate.mjs"
-      - "config/free-agent-providers.json"
-  issues:
-    types: [labeled]
+'on':
   workflow_dispatch:
     inputs:
       task:
@@ -19,7 +9,6 @@ on:
         options: [selfcheck]
         default: selfcheck
         required: true
-
 permissions:
   contents: read
   issues: read
