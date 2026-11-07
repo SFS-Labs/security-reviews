@@ -8,11 +8,11 @@ Camber proposed, in order, (1) `binary_session({})`, (2) `inspect_apktool_client
 
 ## Execution and security
 
-`sfs-camber-multitool.yml` uses a public standard GitHub Actions runner with read-only GitHub permissions and fixed Node 24.22.1 and REA 6.8.0. The task runs under a strictly audited allowlist and maximum three MCP calls, each with empty arguments. The runner independently checks MCP tool definitions and refuses tools requiring arguments, and verifies REA server identity before further calls.
+`sfs-camber-multitool.yml` uses a public standard GitHub Actions runner with read-only GitHub permissions and fixed Node 24.22.1 and REA 6.8.0. The task runs under a strictly audited allowlist and maximum three MCP calls, each with empty arguments. Manual `workflow_dispatch` now requires an explicit `expected_sha` input equal to `github.sha`; this is a narrow branch-safe gate for running the exact reviewed commit on non-main hardening branches.
 
-`tools/free-agent/run-camber-multitool.mjs` launches one actual REA MCP stdio server, sends `initialize`, reads the actual `tools/list`, then issues a separate `tools/call` for each Camber-selected tool. The output explicitly distinguishes **MCP tool response** from **tool environment availability**; a missing external apktool or adb is a diagnostic finding, not a claim of successful Android analysis. Actual tool errors are recorded as such. No real APK or device is accessed.
+`tools/free-agent/run-camber-multitool.mjs` launches one actual REA MCP stdio server, sends `initialize`, reads the actual `tools/list`, then issues a separate `tools/call` for each Camber-selected tool. The runner fails on protocol anomalies (non-JSON replies, missing/duplicate tools, timeout, premature exit), `isError: true`, missing `normalized_result`, invalid REA package identity, and missing `client.version` for `inspect_apktool_client`/`inspect_adb_client`. No real APK or device is accessed.
 
-`tools/free-agent/test-camber-multitool.mjs` rejects target paths, unknown tools, reordered tools, more calls, unauthorized origins, billable services, and other malformed plans. Existing `provider-gate.mjs` continues to disallow headless Camber inference. No paid inference, GitHub Copilot Cloud Agent, ChatGPT Work/Codex, secrets, or auto-merge.
+`tools/free-agent/test-camber-multitool.mjs` includes deterministic fake-MCP integration tests of the actual runner covering tool errors, malformed replies, missing/duplicate tools, invalid identity, timeouts, premature exits, incomplete evidence, failure exit status, and process-tree cleanup. Existing `provider-gate.mjs` continues to disallow headless Camber inference. No paid inference, GitHub Copilot Cloud Agent, ChatGPT Work/Codex, secrets, or auto-merge.
 
 ## Independent acceptance
 
@@ -32,11 +32,13 @@ A passing GitHub workflow plus `CAMBER_MULTITOOL_EVIDENCE` is required before ma
 - **What this proves:** A real Camber-model-chosen tool sequence was reviewed, dispatched by the GitHub PR CI and executed with successful REA MCP responses, no targets and no paid model API.
 - **What it does not prove:** That Camber started without any outside message, that the REA server performed APK decompilation, or that Camber can choose and execute arbitrary REA tools without the reviewed allowlist. The runner did not make a Camber model inference call itself.
 
-## Scheduled no-credit fallback — NOT Camber headless execution
+## Security review findings and current limits
 
-The selected read-only REA plan now also supports a weekly GitHub Actions schedule, Mondays at 06:17 UTC (GitHub schedule delays are possible). This runs on the public standard Ubuntu GitHub-hosted runner, with no Camber API calls at runtime, no ChatGPT Work/Codex/Copilot agents, and no paid model inference. Normal PR CI and manual workflow_dispatch remain available. No cron-triggered run has yet occurred; PR CI only verifies the workflow body, not the future scheduler event. The scheduled event may be disabled by GitHub after prolonged public-repository inactivity.
-
-**Crucial distinction:** The scheduler replays the source-controlled plan that Camber previously selected; it does **not** start the Camber AI agent. If Issue #5 requires Camber's model to wake autonomously and select new tools on each run, this remains BLOCKED until there is a supported, securely authenticated headless Camber invocation (or an additional external automation slot and an actual validated connector run). Do not call this change Camber self-starting autonomy.
+- Workflow permissions remain `contents: read`; no permission expansion was required.
+- REA invocation remains pinned to `rea-agents@6.8.0`; Node action and checkout action remain SHA-pinned.
+- Runner still inherits environment variables from the GitHub job environment; this is acceptable for this diagnostic-only workflow but not equivalent to a scrubbed allowlist environment.
+- `apt-get` and npm transitive dependency trees are not lockfile-pinned; this remains an infrastructure supply-chain limitation of the hosted-runner install path.
+- Injection boundaries stay fixed: reviewed three-tool allowlist only, empty tool arguments only, and rejection of duplicate/missing inventory or malformed replies.
 
 ## Camber-initiated production acceptance
 

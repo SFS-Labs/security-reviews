@@ -1,6 +1,11 @@
 name: SFS Camber selected REA multi-tool (no AI API)
 'on':
   workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: 'Exact commit SHA to execute (must match github.sha)'
+        required: true
+        type: string
 permissions:
   contents: read
 
@@ -11,9 +16,9 @@ concurrency:
 jobs:
   read-only-diagnostics:
     if: >-
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'schedule' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main')
+      github.event_name == 'workflow_dispatch' &&
+      startsWith(github.ref, 'refs/heads/') &&
+      github.event.inputs.expected_sha == github.sha
     runs-on: ubuntu-24.04
     timeout-minutes: 8
     steps:
