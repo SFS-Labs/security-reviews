@@ -15,10 +15,12 @@ const cfg=JSON.parse(await readFile(new URL("../../docs/rea-copilot-mcp.json",im
 const c=cfg.mcpServers?.rea;
 if(c?.command!=="npx"||JSON.stringify(c.args)!==JSON.stringify(["-y","rea-agents@6.8.0","mcp"]))
  throw Error("REA version or command drift");
-const child=spawn(c.command,c.args,{stdio:["pipe","pipe","pipe"],env:{...process.env,
+const child=spawn(c.command,c.args,{stdio:["pipe","pipe","pipe"],detached:true,env:{...process.env,
  npm_config_audit:"false",npm_config_fund:"false"}});
 const reader=createInterface({input:child.stdout,crlfDelay:Infinity});
 let seq=0,closed=false,stderrTail="";
+const childClosed=new Promise(resolve=>child.once("close",resolve));
+function signalGroup(signal){try{process.kill(-child.pid,signal);}catch(e){if(e.code!=="ESRCH")throw e;}}
 const waiting=new Map();
 child.stderr.on("data",chunk=>{stderrTail=(stderrTail+chunk.toString()).slice(-500);});
 function rejectAll(err) {
@@ -119,7 +121,10 @@ try{
  console.error("CAMBER_MULTITOOL_FAILED="+String(err.message).slice(0,700));
  process.exitCode=1;
 }finally{
- child.kill("SIGTERM");
  child.stdin.end();
+ signalGroup("SIGTERM");
+ await Promise.race([childClosed,new Promise(resolve=>setTimeout(resolve,500))]);
+ signalGroup("SIGKILL");
  reader.close();
+ await childClosed;
 }

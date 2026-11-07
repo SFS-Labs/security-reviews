@@ -3,11 +3,13 @@ import readline from 'node:readline';
 import {writeFileSync} from 'node:fs';
 if(process.env.FAKE_PID_FILE) writeFileSync(process.env.FAKE_PID_FILE,String(process.pid));
 const scenario=process.env.FAKE_SCENARIO;
+if(scenario==='stubborn'){process.on('SIGTERM',()=>{});setInterval(()=>{},1000);}
 const names=['binary_session','inspect_apktool_client','inspect_adb_client'];
 let calls=0;
 readline.createInterface({input:process.stdin}).on('line',line=>{
  const msg=JSON.parse(line);
  if(!msg.id)return;
+ if((scenario==='timeout'||scenario==='stubborn') && msg.method==='tools/list')return;
  if(scenario==='exit' && msg.method==='initialize')process.exit(7);
  if(scenario==='malformed' && msg.method==='initialize'){process.stdout.write('not json\n');return;}
  let result;
