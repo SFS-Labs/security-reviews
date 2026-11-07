@@ -29,6 +29,7 @@ jobs:
         shell: bash
         run: |
           node --test tools/free-agent/test-camber-multitool.mjs
+          node --test tools/free-agent/test-mcp-response-acceptance.mjs
           node --test tools/free-agent/test-provider-gate.mjs
       - name: Install pinned REA core
         shell: bash
