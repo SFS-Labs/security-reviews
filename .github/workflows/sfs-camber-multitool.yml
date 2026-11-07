@@ -32,6 +32,8 @@ jobs:
           node --test tools/free-agent/test-camber-multitool.mjs
           node --test tools/free-agent/test-mcp-response-acceptance.mjs
           node --test tools/free-agent/test-provider-gate.mjs
+          node --test tools/free-agent/test-workflow-dispatch.mjs
+          node --test tools/free-agent/test-runner-integration.mjs
       - name: Install pinned REA core
         shell: bash
         run: bash tools/rea/install.sh core
