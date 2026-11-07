@@ -6,6 +6,7 @@ import {spawn} from "node:child_process";
 import {createInterface} from "node:readline";
 import {readFile,appendFile} from "node:fs/promises";
 import {loadCamberPlan} from "./validate-camber-multitool.mjs";
+import {verifyMcpToolReply,assertCompleteCamberEvidence} from "./mcp-response-acceptance.mjs";
 import {readAndVerifyProviderGate} from "./provider-gate.mjs";
 if(process.env.GITHUB_ACTIONS!=="true")throw Error("Approved GitHub Actions execution only");
 await readAndVerifyProviderGate();
@@ -14,10 +15,12 @@ const cfg=JSON.parse(await readFile(new URL("../../docs/rea-copilot-mcp.json",im
 const c=cfg.mcpServers?.rea;
 if(c?.command!=="npx"||JSON.stringify(c.args)!==JSON.stringify(["-y","rea-agents@6.8.0","mcp"]))
  throw Error("REA version or command drift");
-const child=spawn(c.command,c.args,{stdio:["pipe","pipe","pipe"],env:{...process.env,
+const child=spawn(c.command,c.args,{stdio:["pipe","pipe","pipe"],detached:true,env:{...process.env,
  npm_config_audit:"false",npm_config_fund:"false"}});
 const reader=createInterface({input:child.stdout,crlfDelay:Infinity});
 let seq=0,closed=false,stderrTail="";
+const childClosed=new Promise(resolve=>child.once("close",resolve));
+function signalGroup(signal){try{process.kill(-child.pid,signal);}catch(e){if(e.code!=="ESRCH")throw e;}}
 const waiting=new Map();
 child.stderr.on("data",chunk=>{stderrTail=(stderrTail+chunk.toString()).slice(-500);});
 function rejectAll(err) {
@@ -65,7 +68,11 @@ try{
  const tools=new Map();let cursor;
  for(let page=0;page<20;page++){
   const l=await req("tools/list",cursor?{cursor}:{});
-  for(const tool of l.tools||[])tools.set(tool.name,tool);
+  if(!Array.isArray(l?.tools))throw Error("Invalid MCP tools/list reply");
+  for(const tool of l.tools){
+   if(!tool || typeof tool.name!=="string" || tools.has(tool.name))throw Error("Invalid or duplicate MCP tool declaration");
+   tools.set(tool.name,tool);
+  }
   cursor=l.nextCursor;if(!cursor)break;
   if(page===19)throw Error("Tool inventory pagination exceeded");
  }
@@ -77,8 +84,9 @@ try{
  for(const step of steps){
   const started=Date.now();
   const res=await req("tools/call",{name:step.name,arguments:{}},60000);
+  verifyMcpToolReply(step.name,res);
   const objects=dataObjects(res);
-  const conclusion=res?.isError===true?"TOOL_REPORTED_ERROR":"REPLIED";
+  const conclusion="REPLIED";
   let identity=null;
   if(step.name==="binary_session"){
    const body=objects.find(z=>z.server_identity);
@@ -92,7 +100,8 @@ try{
   results.push({tool:step.name,args:{},mcp_response_received:true,
    outcome:conclusion,duration_ms:Date.now()-started,identity});
  }
- const evidence={verdict:"PASS_MCP_TRANSPORT",source:"Camber model-selected reviewed plan",
+ assertCompleteCamberEvidence(steps.map(x=>x.name),results);
+ const evidence={verdict:"PASS_MCP_TOOLS",source:"Camber model-selected reviewed plan",
   planned_tools:steps.map(x=>x.name), actual_tools:results,
   actual_distinct_tool_calls:results.length,
   all_tools_returned_without_tool_error:results.every(x=>x.outcome==="REPLIED"),
@@ -112,7 +121,10 @@ try{
  console.error("CAMBER_MULTITOOL_FAILED="+String(err.message).slice(0,700));
  process.exitCode=1;
 }finally{
- child.kill("SIGTERM");
  child.stdin.end();
+ signalGroup("SIGTERM");
+ await Promise.race([childClosed,new Promise(resolve=>setTimeout(resolve,500))]);
+ signalGroup("SIGKILL");
  reader.close();
+ await childClosed;
 }

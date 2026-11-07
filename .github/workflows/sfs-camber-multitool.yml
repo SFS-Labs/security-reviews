@@ -12,6 +12,7 @@ jobs:
   read-only-diagnostics:
     if: >-
       (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/hardening/rea-readiness-20261107') ||
       (github.event_name == 'schedule' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.base.ref == 'main')
     runs-on: ubuntu-24.04
@@ -29,7 +30,10 @@ jobs:
         shell: bash
         run: |
           node --test tools/free-agent/test-camber-multitool.mjs
+          node --test tools/free-agent/test-mcp-response-acceptance.mjs
           node --test tools/free-agent/test-provider-gate.mjs
+          node --test tools/free-agent/test-workflow-dispatch.mjs
+          node --test tools/free-agent/test-runner-integration.mjs
       - name: Install pinned REA core
         shell: bash
         run: bash tools/rea/install.sh core
