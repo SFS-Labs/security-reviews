@@ -34,11 +34,15 @@ A passing GitHub workflow plus `CAMBER_MULTITOOL_EVIDENCE` is required before ma
 
 ## Scheduled no-credit fallback — NOT Camber headless execution
 
-The selected read-only REA plan now also supports a weekly GitHub Actions schedule, Mondays at 06:17 UTC (GitHub schedule delays are possible). This runs on the public standard Ubuntu GitHub-hosted runner, with no Camber API calls at runtime, no ChatGPT Work/Codex/Copilot agents, and no paid model inference. Normal PR CI and manual workflow_dispatch remain available. No cron-triggered run has yet occurred; PR CI only verifies the workflow body, not the future scheduler event. The scheduled event may be disabled by GitHub after prolonged public-repository inactivity.
+**Historical only:** the earlier GitHub schedule was deliberately disabled on 2 November 2026. The current `sfs-camber-multitool.yml` has only `workflow_dispatch`, with no scheduled, PR or push trigger. Previous scheduled executions are dated evidence, not an active unattended service. The selected Camber plan is replayed from reviewed source; no fresh Camber inference is executed on the runner.
 
 **Crucial distinction:** The scheduler replays the source-controlled plan that Camber previously selected; it does **not** start the Camber AI agent. If Issue #5 requires Camber's model to wake autonomously and select new tools on each run, this remains BLOCKED until there is a supported, securely authenticated headless Camber invocation (or an additional external automation slot and an actual validated connector run). Do not call this change Camber self-starting autonomy.
 
-## Camber-initiated production acceptance
+## Verified hardened live runner — 7 November 2026
+
+[Actions #42355851924](https://github.com/SFS-Labs/security-reviews/actions/runs/42355851924) at exact SHA `301b08b9871a4d1208a6bd2185539ff4d374e32a` passed 62 deterministic tests and three real, target-free MCP calls with reported `PASS_MCP_TOOLS` and REA 6.8.0 identity/catalog count. Tests cover fake-server malformed/error/missing/duplicate responses, wrong identity, early exits, incomplete evidence, timeouts and direct child cleanup. **Not established:** semantic correctness of every upstream diagnostic, credential-environment isolation, fully reproducible transitive dependencies or independent human authorization. The [checkpoint](REA_READINESS_CHECKPOINT_2026-11-07.md) separates these limits from verified transport. Any newer PR-head commit needs its own fresh Actions run.
+
+## Camber-initiated historical workflow acceptance
 
 Live Camber agent chose the Android multi-tool workflow in preference to the generic REA one-tool selfcheck for the user's natural-language Android readiness request, then initiated exactly one authenticated GitHub workflow_dispatch. [Camber decision and dispatch](https://app.cambercloud.com/project/8eac984b-5be0-46d8-a98c-e50ef46fc3ee?chatId=2d369cf6-5c6f-4721-8980-a9ca9abc1f4c).
 [GitHub Actions run #40716523503](https://github.com/SFS-Labs/security-reviews/actions/runs/40716523503) completed SUCCESS; actual REA MCP calls to binary_session, inspect_apktool_client and inspect_adb_client all returned without errors, 33 validation checks passed. REA 6.8.0, catalog 229 tools. No third-party APK or device was used.
