@@ -51,6 +51,6 @@ This repository contains two distinct areas of personal, AI-assisted engineering
 | REA package, local protocol and toolchain | [REA toolchain](docs/REA_TOOLCHAIN.md) · [MCP E2E verification](docs/REA_MCP_E2E_VERIFICATION.md) |
 | Camber-to-GitHub control | [Camber decision/dispatch record](docs/CAMBER_ACTIONS_DISPATCH_VERIFIED.md) · [multi-tool acceptance](docs/CAMBER_MULTITOOL_ACCEPTANCE.md) |
 | Permission and provider trade-offs | [Control-plane decision ADR-005](docs/architecture/ADR-005-CAMBER-OPTIONAL-CONTROL-PLANE.md) |
-| Public-facing engineering documentation | [SFS.Labs REA case](https://sfs-labs.gitbook.io/sfs-labs-docs/ai-docs/agent-orchestration-rea/rea) · [portfolio evidence index](https://sfs-labs.gitbook.io/sfs-labs-docs/ai-docs/engineering-proof-index/projects) |
+| Public-facing engineering documentation | [SFS.Labs REA case](https://sfs-labs.gitbook.io/sfs-labs-docs/ai-docs/further-engineering-projects/rea) · [portfolio evidence index](https://sfs-labs.gitbook.io/sfs-labs-docs/ai-docs/projects) |
 
 **Attribution:** I define the problem, integration boundaries, task requirements and acceptance criteria and use AI-assisted implementation, review and verification. Repo activity alone does not establish independent manual authorship of every line. The listed results have deliberately narrow scope; a passing runner or test suite is not interchangeable with a deployed customer system.
