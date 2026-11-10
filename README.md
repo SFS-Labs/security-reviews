@@ -1,15 +1,3 @@
-> **Competency evidence — scoped external technical review and source-level remediation follow-up**
->
-> **Applied:** Inspected the agreed Solidity hook risk areas, reproduced the original Foundry suite, documented findings and reviewed developer changes.
->
-> **Observed:** 222 original tests independently reproduced; two Low findings and eight notes; nine follow-up commits affecting 26 files inspected at source level.
->
-> **Scope:** The revised tests were not independently rerun; this is not a comprehensive or production-security audit.
->
-> [POINCARÉ case study](https://github.com/SFS-Labs/SFS-Labs/blob/main/security-review/case-studies/poincare-2026.md) · [REA integration evidence](docs/CAMBER_MULTITOOL_ACCEPTANCE.md)
-
----
-
 # SFS.Labs — REA Orchestration & Security Reviews
 
 **Applied AI integration, bounded agent execution and evidence-led technical review.**  
