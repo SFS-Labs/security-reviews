@@ -1,7 +1,7 @@
 # SFS.Labs — REA Orchestration & Security Reviews
 
 **Applied AI integration, bounded agent execution and evidence-led technical review.**  
-This repository contains two distinct areas of personal, AI-assisted engineering work: a tested **REA/MCP execution stack** and a documented **external Solidity pre-launch review**. It is not an enterprise deployment, a security-audit certification or proof of unrestricted agent autonomy.
+This repository contains two distinct areas of personal, AI-assisted engineering work: a tested **REA/MCP execution stack** and a documented **external Solidity pre-launch review**.
 
 ## 1 · REA Stack — agent decisions to controlled execution
 
@@ -27,7 +27,7 @@ This repository contains two distinct areas of personal, AI-assisted engineering
 - **Pinned scope:** 7 first-party Solidity files (~1,298 LOC); initial **222 Foundry tests independently reproduced**.
 - **Original results:** 2 Low findings and 8 notes, supported by manual review and scoped static/property-based checks.
 - **Developer follow-up:** 9 remediation commits covering 26 changed files were inspected at source level.
-- **Verification limit:** The maintainer reported 240 tests on the revised branch; that revised suite was **not independently rerun**. This was a scope-limited individual review, not an end-to-end audit or production-security guarantee.
+- **Verification limit:** The maintainer reported 240 tests on the revised branch; that revised suite was **not independently rerun**.
 
 **Review and remediation evidence:** [POINCARÉ case study (PDF)](POINCARE-case-study.pdf) · [public detailed findings and follow-up](https://github.com/SFS-Labs/SFS-Labs/blob/main/security-review/case-studies/poincare-2026.md) · [developer's source-level remediation comparison](https://github.com/Prakhar-30/POINCARE/compare/78d75e24d7a899fbd488aedd0c0d4de6fe019adb...7699f62630404a34fd89298f8994cdc63c9da1ab).
 
@@ -40,4 +40,4 @@ This repository contains two distinct areas of personal, AI-assisted engineering
 | Permission and provider trade-offs | [Control-plane decision ADR-005](docs/architecture/ADR-005-CAMBER-OPTIONAL-CONTROL-PLANE.md) |
 | Public-facing engineering documentation | [REA MCP execution verification](docs/REA_MCP_E2E_VERIFICATION.md) · [public project evidence index](https://github.com/SFS-Labs/SFS-Labs/blob/main/case-studies/README.md) |
 
-**Attribution:** I define the problem, integration boundaries, task requirements and acceptance criteria and use AI-assisted implementation, review and verification. Repo activity alone does not establish independent manual authorship of every line. The listed results have deliberately narrow scope; a passing runner or test suite is not interchangeable with a deployed customer system.
+**Attribution:** I define the problem, integration boundaries, task requirements and acceptance criteria and use AI-assisted implementation, review and verification.
