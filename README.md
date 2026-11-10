@@ -1,13 +1,12 @@
-> **Recruiter evidence summary:** POINCARÉ — role-relevant external review
-> 
-> Problem: Review a Solidity custom-curve hook for agreed manipulation, liquidity-accounting and configuration risks.
-> - **Analysis:** Seven first-party Solidity files (~1,298 LOC) reviewed; original Foundry suite independently reproduced.
-> - **Decision:** Two Low findings and eight notes reported within an explicitly scoped review; no comprehensive-audit claim.
-> - **Implementation:** Actionable findings delivered; nine developer remediation commits inspected at source level.
-> - **Verification:** 222 tests reproduced on the pinned original source; 26 files changed across the nine remediation commits inspected.
-> - **Boundary:** The revised test suite reported by the maintainer was not independently rerun; no production-security guarantee.
-> 
-> The remainder of this README and the linked artifacts provide the detailed technical record.
+> **Competency evidence — scoped external technical review and source-level remediation follow-up**
+>
+> **Applied:** Inspected the agreed Solidity hook risk areas, reproduced the original Foundry suite, documented findings and reviewed developer changes.
+>
+> **Observed:** 222 original tests independently reproduced; two Low findings and eight notes; nine follow-up commits affecting 26 files inspected at source level.
+>
+> **Scope:** The revised tests were not independently rerun; this is not a comprehensive or production-security audit.
+>
+> [POINCARÉ case study](https://github.com/SFS-Labs/SFS-Labs/blob/main/security-review/case-studies/poincare-2026.md) · [REA integration evidence](docs/CAMBER_MULTITOOL_ACCEPTANCE.md)
 
 ---
 
