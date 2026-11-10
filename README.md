@@ -1,3 +1,16 @@
+> **Recruiter evidence summary:** POINCARÉ — role-relevant external review
+> 
+> Problem: Review a Solidity custom-curve hook for agreed manipulation, liquidity-accounting and configuration risks.
+> - **Analysis:** Seven first-party Solidity files (~1,298 LOC) reviewed; original Foundry suite independently reproduced.
+> - **Decision:** Two Low findings and eight notes reported within an explicitly scoped review; no comprehensive-audit claim.
+> - **Implementation:** Actionable findings delivered; nine developer remediation commits inspected at source level.
+> - **Verification:** 222 tests reproduced on the pinned original source; 26 files changed across the nine remediation commits inspected.
+> - **Boundary:** The revised test suite reported by the maintainer was not independently rerun; no production-security guarantee.
+> 
+> The remainder of this README and the linked artifacts provide the detailed technical record.
+
+---
+
 # SFS.Labs — REA Orchestration & Security Reviews
 
 **Applied AI integration, bounded agent execution and evidence-led technical review.**  
