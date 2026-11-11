@@ -1,5 +1,7 @@
 # SFS.Labs — REA Orchestration & Security Reviews
 
+<img src="https://raw.githubusercontent.com/SFS-Labs/SFS-Labs/main/branding/sfs-lockup-light.svg" width="320" alt="SFS.Labs" />
+
 **Applied AI integration, bounded agent execution and evidence-led technical review.**  
 This repository contains two distinct areas of personal, AI-assisted engineering work: a tested **REA/MCP execution stack** and a documented **external Solidity pre-launch review**.
 
